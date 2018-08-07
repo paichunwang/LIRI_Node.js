@@ -1,26 +1,32 @@
 //Requests and config files
 require('dotenv').config({ path: './.env' })
-var request = require("request");
-var Spotify = require('node-spotify-api');
+
+let request = require("request");
+let Spotify = require('node-spotify-api');
+let dotenv = require('dotenv');
+let fs = require('fs');
 
 //Variable declaration
-var action = process.argv[2] // this is pre-defined since user will always have to enter a action, will prompt if user didn't eneter anything
-var variable;
+var action = process.argv[2]; // this is pre-defined since user will always have to enter a action, will prompt if user didn't eneter anything
+var variable = process.argv[3];
 
-if (action && variable) { //Double if to check user input exists
+// if (action && variable) { //Double if to check user input exists
     if (action == "movie-this") { // Movie IMDB
         if (variable == undefined) { variable = 'Mr. Nobody' } else { variable = process.argv[3]; }
-        movie(variable)
+        movie(variable);
     } // Movie IMDB
-    else if (action == "spotify-this-song") {
-        if (variable == undefined) { variable = '' } else { variable = process.argv[3]; }
-        spotify(variable)
+    else if (action == "spotify-this-song") { // Spotify
+        if (variable == undefined) { variable = 'Ace of Base' } else { variable = process.argv[3]; }
+        spotify(variable);
+    }// Spotify
+    else{
+        console.log("Nothing Ran, check your spellings?");
     }
-    else if (action == "") { }
-    else if (action == "") { }
-    else if (action == "") { }
-    else if (action == "") { }
-}
+    // else if (action == "") { }
+    // else if (action == "") { }
+    // else if (action == "") { }
+    // else if (action == "") { }
+// }
 
 function movie(variable) {
     request(`http://www.omdbapi.com/?t=${variable}&y=&plot=short&apikey=trilogy`, function (error, response, body) {
@@ -41,25 +47,35 @@ function movie(variable) {
 }
 
 function spotify(variable) { //This code was supplied by node-spotify-api
-    dotenv.connect({
-        host: process.env.SPOTIFY_ID
-    })
 
-    console.log(host)
+    // console.log(process.env.SPOTIFY_ID);
+    // console.log(process.env.SPOTIFY_SECRET);
+
+    let myid = process.env.SPOTIFY_ID;
+    let mysecret = process.env.SPOTIFY_SECRET;
 
     var spotify = new Spotify({
-        id: 3144,
-        secret: 41141
+        id: myid,
+        secret: mysecret
     });
     spotify.search({
         type: 'track',
-        query: 'All the Small Things'
+        query: variable,
+        limit: 10
     }, function (err, data) {
         if (err) {
             return console.log('Error occurred: ' + err);
+        } else {
+            console.log('\n' +
+                "Artist(s) Name: ".padEnd(28) + data.tracks.items[0].album.artists[0].name + '\n' +
+                "Song Title: ".padEnd(28) + data.tracks.items[0].name + '\n' +
+                "Preview: ".padEnd(28) + data.tracks.items[0].preview_url + '\n' +
+                "Album Title: ".padEnd(28) + data.tracks.items[0].album.name
+            );
         }
-        console.log(data);
+        // console.log(data.tracks.items[0].album.artists[0].name); //Artist Name
+        // console.log(data.tracks.items[0].name); //Song Title
+        // console.log(data.tracks.items[0].preview_url); //Preview URL - Need to integrate clickable link in terminal
+        // console.log(data.tracks.items[0].album.name) //Album name
     });
 }
-
-spotify()
