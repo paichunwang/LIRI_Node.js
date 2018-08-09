@@ -7,25 +7,28 @@ let dotenv = require('dotenv');
 let fs = require('fs');
 
 //Variable declaration
-var action = process.argv[2]; // this is pre-defined since user will always have to enter a action, will prompt if user didn't eneter anything
-var variable = process.argv[3];
+let action = process.argv[2]; // this is pre-defined since user will always have to enter a action, will prompt if user didn't eneter anything
+let variable = process.argv[3];
 
 // if (action && variable) { //Double if to check user input exists
-    if (action == "movie-this") { // Movie IMDB
-        if (variable == undefined) { variable = 'Mr. Nobody' } else { variable = process.argv[3]; }
-        movie(variable);
-    } // Movie IMDB
-    else if (action == "spotify-this-song") { // Spotify
-        if (variable == undefined) { variable = 'Ace of Base' } else { variable = process.argv[3]; }
-        spotify(variable);
-    }// Spotify
-    else{
-        console.log("Nothing Ran, check your spellings?");
-    }
-    // else if (action == "") { }
-    // else if (action == "") { }
-    // else if (action == "") { }
-    // else if (action == "") { }
+if (action == "movie-this") { // Movie IMDB
+    if (variable == undefined) { variable = 'Mr. Nobody' } else { variable = process.argv[3]; }
+    movie(variable);
+} // Movie IMDB
+else if (action == "spotify-this-song") { // Spotify
+    if (variable == undefined) { variable = 'Ace of Base' } else { variable = process.argv[3]; }
+    spotify(variable);
+}// Spotify
+else if (action == "do-what-it-says") {
+    random();
+}
+else {
+    console.log("Nothing Ran, check your spellings?");
+}
+// else if (action == "") { }
+// else if (action == "") { }
+// else if (action == "") { }
+// else if (action == "") { }
 // }
 
 function movie(variable) {
@@ -54,7 +57,7 @@ function spotify(variable) { //This code was supplied by node-spotify-api
     let myid = process.env.SPOTIFY_ID;
     let mysecret = process.env.SPOTIFY_SECRET;
 
-    var spotify = new Spotify({
+    let spotify = new Spotify({
         id: myid,
         secret: mysecret
     });
@@ -77,5 +80,24 @@ function spotify(variable) { //This code was supplied by node-spotify-api
         // console.log(data.tracks.items[0].name); //Song Title
         // console.log(data.tracks.items[0].preview_url); //Preview URL - Need to integrate clickable link in terminal
         // console.log(data.tracks.items[0].album.name) //Album name
+    });
+}
+
+function random() {
+    fs.readFile("random.txt", "UTF8", function (err, data) {
+        let ramChoices = data.split(", ")
+        // let availableChoice = ['movie-this','spotify-this-song','my-tweets']
+        let command = Math.floor((Math.random() * 3)) // Random which three choice it picks (Rang: 0,1,2)
+        let choice = Math.floor((Math.random() * ramChoices.length)) // Random a word from the random.txt
+        // console.log("Action: " + availableChoice[command] + " Choice: " + ramChoices[choice])
+        if (command == 0) { //IMDB
+            movie(ramChoices[choice])
+        }
+        else if (command == 1) { //Spotify
+            spotify(ramChoices[choice])
+        }
+        else if (command == 2) { //Tweeter
+            console.log("Tweeter Selected: Start Working on it!")
+        }
     });
 }
