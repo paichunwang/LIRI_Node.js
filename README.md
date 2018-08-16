@@ -56,20 +56,20 @@ IMDB_KEY=your-IMDB-api-key
 To test this functionality,
 1. open the liri.js file wiht your choice of terminal.
 2. in the terminal run the any of the following command:
-   - node liri.js movie-this
+   - **node liri.js movie-this**
      - returns 'Mr. Nobody' as the keyword, since no argument was passed to search
-   - node liri.js movie-this *keyword*
+   - **node liri.js movie-this** *keyword*
      - return movie closest match the IMDB database with given keyword; will only return one result
-   - node liri.js spotify-this-song
+   - **node liri.js spotify-this-song**
      - return 'Ace of Base' song search, since no argument was passed to search
-   - node liri.js spotify-this-song *keyword*
+   - **node liri.js spotify-this-song** *keyword*
      - return song title closest match the search keyword; will only return one result
-   - node liri.js my-tweets
+   - **node liri.js my-tweets**
      - return the last 20 tweets you have on your twitter account
-   - node liri.js do-what-it-says
+   - **node liri.js do-what-it-says**
      - return one of the three main commands combined with a random keyword from the random.txt file and run as command
-   - ie. node liri.js movie-this blue
-   - ie. node liri.js spotify-this-song awesome
+     - ie. *node liri.js movie-this blue*
+     - ie. *node liri.js spotify-this-song awesome*
 
 ## Deployment
 
@@ -81,7 +81,7 @@ To test this functionality,
 * [HTML](https://www.w3.org/standards/webdesign/htmlcss) - the language for describing the structure of Web page.
 * [Bootstrap MAXCDN 3.3.7](http://blog.getbootstrap.com/2016/07/25/bootstrap-3-3-7-released/) - version of bootstrap used to dynamically format HTML webpages.
 * [VSCode](https://code.visualstudio.com/) - free code editor that is used to redefine and optimize for the building and debugging modern web and cloud applications.
-* [GIPHY API](https://developers.giphy.com/) - pre-made API that helps to natively embed a library of Gifs.
+* [Node.js](https://nodejs.org/en/) - JavaScript runtime built on Chrome's V8 JavaScript engine.
 
 ## Contributing
 
